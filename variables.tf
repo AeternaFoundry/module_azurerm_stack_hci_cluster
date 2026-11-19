@@ -29,6 +29,14 @@ EOT
   validation {
     condition = alltrue([
       for k, v in var.stack_hci_clusters : (
+        length(v.name) >= 1 && length(v.name) <= 260
+      )
+    ])
+    error_message = "must be between 1 and 260 characters"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.stack_hci_clusters : (
         length(v.resource_group_name) <= 90
       )
     ])
@@ -74,6 +82,6 @@ EOT
     ])
     error_message = "[from tags.Validate: invalid when len(value) > 50]"
   }
-  # Note: 10 additional provider-side validators are enforced at apply time but not mirrored as validation{} blocks here (bespoke or non-mechanically-translatable).
+  # Note: 8 additional provider-side validators are enforced at apply time but not mirrored as validation{} blocks here (bespoke or non-mechanically-translatable).
 }
 
